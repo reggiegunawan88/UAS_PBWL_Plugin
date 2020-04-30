@@ -7,6 +7,7 @@ Version: 1.0.0
 Author: Group G (Reggie Maurice Gunawan, Frengki Ang)
 Author URI: http://grupg-pbwlanjut.com/
 */
+$hook_menu;
 
 //to prevent data leaks, so it cant be accessed directly
 if(!defined('ABSPATH'))
@@ -15,7 +16,7 @@ if(!defined('ABSPATH'))
 }
 
 //check if woocommerce plugin is active
-if(!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_options('active_plugins'))))
+if(!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins'))))
 {
     exit;
 }
@@ -39,17 +40,14 @@ function export_menu_output()
         Silahkan gunakan fitur export file ke dalam bentuk CSV atau XLS
         <form action="<?php menu_page_url('export-order') ?>" method="post">
             <button type="submit" class="button">Export now</button>
-        </form>
-
-        
+        </form>  
     </div>
-
     <?php
-        add_action('load-',$hook_menu,'export_order_submit');
-        function export_order_submit()
-        {
-
-        }
-    ?>
 }
 
+    add_action('load-',$hook_menu,'export_order_submit');
+    function export_order_submit()
+    {
+
+    }
+?>
