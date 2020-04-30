@@ -12,7 +12,7 @@ add_action('admin_menu', 'add_export_menu');
 
 function add_export_menu()
 {
-    add_menu_page('Page Title', 'Export Order', 'manage_options', 'export-order', 'export_menu_output', 'dashicons-media-spreadsheet');
+    add_menu_page('Export Order', 'Export Order', 'manage_options', 'export-order', 'export_menu_output', 'dashicons-media-spreadsheet');
 }
 
 function export_menu_output(){
