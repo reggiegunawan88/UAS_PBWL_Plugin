@@ -33,7 +33,7 @@ add_action('admin_menu', 'add_export_menu');
 
 function add_export_menu()
 {
-    $hook_export_order = add_submenu_page('woocommerce', 'Export Order', 'Export Order', 'view_woocommerce_reports', 'export-order', 'export_menu_output');
+    add_submenu_page('woocommerce', 'Export Order', 'Export Order', 'view_woocommerce_reports', 'export-order', 'export_menu_output');
 }
 
 function export_menu_output()
