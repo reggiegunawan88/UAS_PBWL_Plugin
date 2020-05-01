@@ -31,17 +31,20 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 
 add_action('admin_menu', 'add_export_menu');
 
+//add custom menu to admin page
 function add_export_menu()
 {
     add_submenu_page('woocommerce', 'Export Order', 'Export Order', 'view_woocommerce_reports', 'export-order', 'export_menu_output');
 }
 
+//output content inside custom menu
 function export_menu_output()
 {
     if(!current_user_can('view_woocommerce_reports'))
     {
         return;
     }
+
     echo '<div class="wrap center"><h2>Export File to CSV/XLS</h2>';
     echo '<h3>Silahkan pilih fitur dibawah ini untuk melakukan export data ke dalam bentuk CSV/XLS</h3></div>';
     WC()->session = new WC_Session_Handler();
@@ -63,23 +66,24 @@ function export_menu_output()
             }
         }
     }
-    echo '<table id="example" class="display" style="width:100%">';
+    echo '<table id="order-data" class="display" style="display:width:100% overflow-x:auto white-space: nowrap">';
     echo
     '<thead>
         <tr>
-        <td>ID Pemesanan</td>
-        <td>Status Pemesanan</td>
-        <td>Tanggal Pemesanan</td>
-        <td>Catatan Pelanggan</td>
-        <td>Metode Pembayaran</td>';
-        foreach(WC()->checkout()->get_checkout_fields('billing') as $fieldset_key) 
-        {
-            echo '<th>'.$fieldset_key['label'].'</th>';
-        }
+        <th>ID Pemesanan</th>
+        <th>Status Pemesanan</th>
+        <th>Tanggal Pemesanan</th>
+        <th>Catatan Pelanggan</th>
+        <th>Metode Pembayaran</th>';
         foreach($meta_keys as $meta_header => $meta_value)
         {
             echo '<th>'.$meta_header.'</th>';
         }
+        foreach(WC()->checkout()->get_checkout_fields('billing') as $fieldset_key) 
+        {
+            echo '<th>'.$fieldset_key['label'].'</th>';
+        }
+        
     echo
         '</tr>
         </thead>';
@@ -91,25 +95,26 @@ function export_menu_output()
         $items = $order->get_items();
         foreach($items as $item)
         {
-            echo '<td>'; echo $order->get_id(); echo '</td>';
-            echo '<td>'; echo $order->get_status(); echo '</td>';
-            echo '<td>'; echo $order->get_date_created(); echo '</td>';
-            echo '<td>'; echo $order->get_customer_note(); echo '</td>';
-            echo '<td>'; echo $order->get_payment_method_title(); echo '</td>';
-            echo '<td>'; echo $order->get_billing_first_name(); echo '</td>';
-            echo '<td>'; echo $order->get_billing_last_name(); echo '</td>';
-            echo '<td>'; echo $order->get_billing_company(); echo '</td>';
-            echo '<td>'; echo $order->get_billing_address_1(); echo '</td>';
-            echo '<td>'; echo $order->get_billing_address_2(); echo '</td>';
-            echo '<td>'; echo $order->get_billing_city(); echo '</td>';
-            echo '<td>'; echo $order->get_billing_state(); echo '</td>';
-            echo '<td>'; echo $order->get_billing_postcode(); echo '</td>';
-            echo '<td>'; echo $order->get_billing_email(); echo '</td>';
-            echo '<td>'; echo $order->get_billing_phone(); echo '</td>';
+            echo '<td style="text-align:center">'; echo $order->get_id(); echo '</td>';
+            echo '<td style="text-align:center">'; echo $order->get_status(); echo '</td>';
+            echo '<td style="text-align:center">'; echo $order->get_date_created(); echo '</td>';
+            echo '<td style="text-align:center">'; echo $order->get_customer_note(); echo '</td>';
+            echo '<td style="text-align:center">'; echo $order->get_payment_method_title(); echo '</td>';
             foreach($meta_keys as $meta_key => $meta_value)
             {
-                echo '<td>'; echo $item->get_meta($meta_key); echo '</td>';
+                echo '<td style="text-align:center">'; echo $item->get_meta($meta_key); echo '</td>';
             }
+            echo '<td style="text-align:center">'; echo $order->get_billing_first_name(); echo '</td>';
+            echo '<td style="text-align:center">'; echo $order->get_billing_last_name(); echo '</td>';
+            echo '<td style="text-align:center">'; echo $order->get_billing_company(); echo '</td>';
+            echo '<td style="text-align:center">'; echo $order->get_billing_address_1(); echo '</td>';
+            echo '<td style="text-align:center">'; echo $order->get_billing_address_2(); echo '</td>';
+            echo '<td style="text-align:center">'; echo $order->get_billing_city(); echo '</td>';
+            echo '<td style="text-align:center">'; echo $order->get_billing_state(); echo '</td>';
+            echo '<td style="text-align:center">'; echo $order->get_billing_postcode(); echo '</td>';
+            echo '<td style="text-align:center">'; echo $order->get_billing_email(); echo '</td>';
+            echo '<td style="text-align:center">'; echo $order->get_billing_phone(); echo '</td>';
+            
         }
         echo '</tr>';
     }
@@ -117,9 +122,10 @@ function export_menu_output()
     echo '</table>';
 }
 ?>
+
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#example').DataTable( {
+    $('#order-data').DataTable( {
         dom: 'Bfrtip',
         buttons: [
             'excelHtml5',
