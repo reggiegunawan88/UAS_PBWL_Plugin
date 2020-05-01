@@ -45,8 +45,8 @@ function export_menu_output()
         return;
     }
 
-    echo '<div class="wrap center"><h2>Export File to CSV/XLS</h2>';
-    echo '<h3>Silahkan pilih fitur dibawah ini untuk melakukan export data ke dalam bentuk CSV/XLS</h3></div>';
+    echo '<div class="wrap center"><h2>Export Order Data to CSV/XLS</h2>';
+    echo '<h3>Please choose the features below to exporting order data into XLS/CSV file type</h3></div>';
     WC()->session = new WC_Session_Handler();
     WC()->session->init();
     $orders = wc_get_orders([]);
