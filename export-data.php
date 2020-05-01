@@ -39,18 +39,20 @@ function add_export_menu()
 function export_menu_output(){
 echo '<div class="wrap center"><h2>Export File to CSV/XLS</h2>';
 echo '<h3>Silahkan pilih fitur dibawah ini untuk melakukan export data ke dalam bentuk CSV/XLS</h3></div>';
- 
+WC()->session = new WC_Session_Handler();
+WC()->session->init();
+echo '<pre>'; foreach ( WC()->checkout()->get_checkout_fields('billing') as $fieldset_key) {
+    echo '<th>'.$fieldset_key['label'].'</th>';
+ } echo '</pre>';
 echo '<table id="example" class="display" style="width:100%">';
 echo
  '<thead>
-     <tr>
-     <th>Name</th>
-     <th>Position</th>
-     <th>Office</th>
-     <th>Age</th>
-     <th>Start date</th>
-     <th>Salary</th>
-     </tr>
+     <tr>';
+     foreach ( WC()->checkout()->get_checkout_fields('billing') as $fieldset_key) {
+        echo '<th>'.$fieldset_key['label'].'</th>';
+     }
+echo
+     '</tr>
  </thead>';
  echo 
  '<tbody>
